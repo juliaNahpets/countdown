@@ -6,11 +6,11 @@ const TARGET_MINUTE = 0;
 
 // Sätze, die über dem Countdown rotieren
 const PHRASES = [
-  "Gleich ist es so weit …",
-  "Nur noch ein kleines bisschen Geduld.",
-  "Die Spannung steigt!",
-  "Um 16 Uhr geht's los.",
-  "Halte durch, es lohnt sich!",
+  "Hörst ihr Wispern...",
+  "Bald ist es soweit...",
+  "Der Zeitpunkt naht...",
+  "Der Wandel kommt...",
+  "Finde den Weg...",
 ];
 
 // Wie lange jeder Satz angezeigt wird (in Millisekunden)

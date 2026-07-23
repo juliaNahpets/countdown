@@ -119,6 +119,7 @@ html {
   display: flex;
   align-items: flex-start;
   gap: 0.6rem;
+  color: #9cd2eb;
 }
 
 .unit {
@@ -153,6 +154,7 @@ html {
 /* ---------- Wechselnde Sätze unter dem Ring ---------- */
 
 #phrase {
+  color: #9cd2eb;
   font-size: clamp(1.2rem, 3vw, 1.9rem);
   font-weight: 300;
   letter-spacing: 0.05em;
