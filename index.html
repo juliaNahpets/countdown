@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Countdown bis 16:00 Uhr</title>
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=6" />
 </head>
 <body>
 
@@ -45,13 +48,11 @@
     <p id="phrase"></p>
   </main>
 
-  <!-- Hintergrundmusik: einfach assets/music.mp3 ablegen -->
-  <audio id="music" loop>
-    <source src="assets/music.mp3" type="audio/mpeg" />
-  </audio>
+  <!-- Hintergrund-Sounds: zwei Wind-Tracks laufen abwechselnd in Endlosschleife -->
+  <audio id="music" src="assets/wind-1.mp3" preload="auto"></audio>
 
   <button id="sound-button" title="Musik an/aus">🔇</button>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>

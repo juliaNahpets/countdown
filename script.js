@@ -72,6 +72,16 @@ function getWandelTime() {
 
 // ---------- Sound an/aus ----------
 
+// zwei Wind-Tracks laufen abwechselnd in Endlosschleife
+const TRACKS = ["assets/wind-1.mp3", "assets/wind-2.mp3"];
+let trackIndex = 0;
+
+els.music.addEventListener("ended", () => {
+  trackIndex = (trackIndex + 1) % TRACKS.length;
+  els.music.src = TRACKS[trackIndex];
+  els.music.play().catch(() => setSoundIcon(false));
+});
+
 function setSoundIcon(on) {
   els.soundButton.textContent = on ? "🔊" : "🔇";
 }
