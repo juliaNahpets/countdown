@@ -203,17 +203,17 @@ html {
 
 .dots span:nth-child(1) {
   opacity: 0;
-  animation: dot-fade-1 3.6s ease-in-out infinite;
+  animation: dot-fade-1 6s ease-in-out infinite;
 }
 
 .dots span:nth-child(2) {
   opacity: 0;
-  animation: dot-fade-2 3.6s ease-in-out infinite;
+  animation: dot-fade-2 6s ease-in-out infinite;
 }
 
 .dots span:nth-child(3) {
   opacity: 0;
-  animation: dot-fade-3 3.6s ease-in-out infinite;
+  animation: dot-fade-3 6s ease-in-out infinite;
 }
 
 @keyframes dot-fade-1 {
