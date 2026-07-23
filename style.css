@@ -206,8 +206,8 @@ html {
   left: 50%;
   transform: translate(-50%, -50%);
   isolation: isolate;
-  width: 104px;
-  height: 104px;
+  width: 80px;
+  height: 80px;
   padding: 0;
   display: grid;
   place-items: center;
@@ -240,8 +240,8 @@ html {
 }
 
 .q-portal-symbol {
-  width: 46px;
-  height: 46px;
+  width: 36px;
+  height: 36px;
   position: relative;
   z-index: 3;
 }
