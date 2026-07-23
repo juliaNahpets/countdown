@@ -197,6 +197,30 @@ html {
   to { opacity: 1; }
 }
 
+/* ---------- animierte Punkte: . .. ... .. . ---------- */
+
+.dots span:nth-child(2) {
+  opacity: 0;
+  animation: dot-fade-2 2.4s ease-in-out infinite;
+}
+
+.dots span:nth-child(3) {
+  opacity: 0;
+  animation: dot-fade-3 2.4s ease-in-out infinite;
+}
+
+@keyframes dot-fade-2 {
+  0%, 10% { opacity: 0; }
+  25%, 72% { opacity: 1; }
+  88%, 100% { opacity: 0; }
+}
+
+@keyframes dot-fade-3 {
+  0%, 28% { opacity: 0; }
+  44%, 56% { opacity: 1; }
+  72%, 100% { opacity: 0; }
+}
+
 /* ---------- Portal-Sanduhr (von qoian.com übernommen, Nacht-Variante) ---------- */
 
 .q-portal-sphere {
@@ -206,8 +230,9 @@ html {
   left: 50%;
   transform: translate(-50%, -50%);
   isolation: isolate;
-  width: 80px;
-  height: 80px;
+  /* skaliert mit dem Ring mit, wird aber nie größer als 80px */
+  width: min(15vmin, 80px);
+  height: min(15vmin, 80px);
   padding: 0;
   display: grid;
   place-items: center;
@@ -240,8 +265,9 @@ html {
 }
 
 .q-portal-symbol {
-  width: 36px;
-  height: 36px;
+  /* proportional zur Kugel */
+  width: 45%;
+  height: 45%;
   position: relative;
   z-index: 3;
 }

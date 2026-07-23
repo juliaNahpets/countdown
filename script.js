@@ -101,17 +101,38 @@ els.soundButton.addEventListener("click", () => {
   }
 });
 
+// ---------- Text mit animierten Punkten ----------
+
+// endet der Text auf "...", werden die Punkte nacheinander
+// ein- und wieder ausgeblendet (. .. ... .. .)
+function setTextWithDots(el, text) {
+  el.textContent = "";
+  if (!text.endsWith("...")) {
+    el.textContent = text;
+    return;
+  }
+  el.append(text.slice(0, -3));
+  const dots = document.createElement("span");
+  dots.className = "dots";
+  for (let i = 0; i < 3; i++) {
+    const dot = document.createElement("span");
+    dot.textContent = ".";
+    dots.appendChild(dot);
+  }
+  el.appendChild(dots);
+}
+
 // ---------- Rotierende Sätze ----------
 
 function startPhrases() {
   let index = 0;
-  els.phrase.textContent = PHRASES[index];
+  setTextWithDots(els.phrase, PHRASES[index]);
 
   setInterval(() => {
     els.phrase.classList.add("fade-out");
     setTimeout(() => {
       index = (index + 1) % PHRASES.length;
-      els.phrase.textContent = PHRASES[index];
+      setTextWithDots(els.phrase, PHRASES[index]);
       els.phrase.classList.remove("fade-out");
     }, 800); // muss zur CSS-Transition passen
   }, PHRASE_INTERVAL);
@@ -156,7 +177,7 @@ function setPhase(phase) {
   els.countdown.classList.add("hidden");
   els.phrase.classList.add("hidden");
   els.wandel.classList.remove("hidden");
-  els.wandelText.textContent = phase === 1 ? TEXT_WANDEL_NAHT : TEXT_WANDEL_DA;
+  setTextWithDots(els.wandelText, phase === 1 ? TEXT_WANDEL_NAHT : TEXT_WANDEL_DA);
 
   // die Sanduhr läuft nur bis 17 Uhr — danach ist der Wandel da
   const sphere = document.querySelector(".q-portal-sphere");
