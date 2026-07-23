@@ -16,10 +16,10 @@ const PHRASES = [
 // Wie lange jeder Satz angezeigt wird (in Millisekunden)
 const PHRASE_INTERVAL = 5000;
 
-// Sätze unter dem Ring ab 17 Uhr
+// Sätze unter dem Ring ab 17 Uhr (ohne Punkt-Animation)
 const PHRASES_DANACH = [
   "Die Zeit mag vergehen...",
-  "..doch wir werden fortbestehen...",
+  "...doch wir werden fortbestehen...",
 ];
 
 // Wandel-Phase: ab 16 Uhr ersetzt dieser Text den Countdown,
@@ -111,10 +111,10 @@ els.soundButton.addEventListener("click", () => {
 // ---------- Text mit animierten Punkten ----------
 
 // endet der Text auf "...", werden die Punkte nacheinander
-// ein- und wieder ausgeblendet (. .. ... .. .)
-function setTextWithDots(el, text) {
+// ein- und wieder ausgeblendet (. .. ... .. .) — außer animate ist false
+function setTextWithDots(el, text, animate = true) {
   el.textContent = "";
-  if (!text.endsWith("...")) {
+  if (!animate || !text.endsWith("...")) {
     el.textContent = text;
     return;
   }
@@ -133,24 +133,26 @@ function setTextWithDots(el, text) {
 
 let phraseIndex = 0;
 let activePhrases = PHRASES;
+let phraseDotsAnimated = true;
 
 // wechselt die Satzliste (z. B. ab 17 Uhr) und zeigt sofort den ersten Satz
-function switchPhraseList(list) {
+function switchPhraseList(list, animateDots) {
   if (activePhrases === list) return;
   activePhrases = list;
+  phraseDotsAnimated = animateDots;
   phraseIndex = 0;
-  setTextWithDots(els.phrase, list[0]);
+  setTextWithDots(els.phrase, list[0], phraseDotsAnimated);
 }
 
 function startPhrases() {
-  setTextWithDots(els.phrase, activePhrases[phraseIndex]);
+  setTextWithDots(els.phrase, activePhrases[phraseIndex], phraseDotsAnimated);
 
   setInterval(() => {
     if (els.phrase.classList.contains("hidden")) return;
     els.phrase.classList.add("fade-out");
     setTimeout(() => {
       phraseIndex = (phraseIndex + 1) % activePhrases.length;
-      setTextWithDots(els.phrase, activePhrases[phraseIndex]);
+      setTextWithDots(els.phrase, activePhrases[phraseIndex], phraseDotsAnimated);
       els.phrase.classList.remove("fade-out");
     }, 800); // muss zur CSS-Transition passen
   }, PHRASE_INTERVAL);
@@ -196,7 +198,7 @@ function setPhase(phase) {
     els.countdown.classList.remove("hidden");
     els.wandel.classList.add("hidden");
     els.phrase.classList.remove("hidden");
-    switchPhraseList(PHRASES);
+    switchPhraseList(PHRASES, true);
     return;
   }
 
@@ -210,9 +212,9 @@ function setPhase(phase) {
     // 16–17 Uhr: keine Sätze unter dem Ring
     els.phrase.classList.add("hidden");
   } else {
-    // ab 17 Uhr: die Danach-Sätze rotieren unter dem Ring
+    // ab 17 Uhr: die Danach-Sätze rotieren unter dem Ring, Punkte statisch
     els.phrase.classList.remove("hidden");
-    switchPhraseList(PHRASES_DANACH);
+    switchPhraseList(PHRASES_DANACH, false);
   }
 }
 
