@@ -132,9 +132,11 @@ function setTextWithDots(el, text, animate = true) {
 
 // ---------- Rotierende Sätze ----------
 
+// die Sätze unter dem Ring zeigen ihre Punkte statisch —
+// animiert werden nur die Punkte des Naht-Textes im Ring
 let phraseIndex = 0;
 let activePhrases = PHRASES;
-let phraseDotsAnimated = true;
+let phraseDotsAnimated = false;
 
 // wechselt die Satzliste (z. B. ab 17 Uhr) und zeigt sofort den ersten Satz
 function switchPhraseList(list, animateDots) {
@@ -214,7 +216,7 @@ function setPhase(phase) {
     els.countdown.classList.remove("hidden");
     els.wandel.classList.add("hidden");
     els.phrase.classList.remove("hidden");
-    switchPhraseList(PHRASES, true);
+    switchPhraseList(PHRASES, false);
     return;
   }
 
