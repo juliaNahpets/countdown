@@ -164,26 +164,41 @@ function startPhrases() {
 // 0 = Countdown läuft, 1 = Wandel naht (16–17 Uhr), 2 = Wandel ist da (ab 17 Uhr)
 let currentPhase = -1;
 
-// Vorschau: ?zeige=wandel zeigt die Ansicht ab 17 Uhr, unabhängig von der Uhrzeit
-const FORCE_PHASE = new URLSearchParams(location.search).get("zeige") === "wandel" ? 2 : null;
+// Vorschau per Link-Parameter, unabhängig von der Uhrzeit:
+//   ?zeige=countdown  → Countdown (zählt bis zum nächsten 16-Uhr-Termin)
+//   ?zeige=naht       → Ansicht 16–17 Uhr (Die Zeit des Wandels naht...)
+//   ?zeige=wandel     → Ansicht ab 17 Uhr (Der Wandel ist da)
+const FORCE_PHASE = { countdown: 0, naht: 1, wandel: 2 }[
+  new URLSearchParams(location.search).get("zeige")
+] ?? null;
+
+function updateCountdownDigits(now, target) {
+  const totalSeconds = Math.floor((target - now) / 1000);
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  els.hours.textContent = String(h).padStart(2, "0");
+  els.minutes.textContent = String(m).padStart(2, "0");
+  els.seconds.textContent = String(s).padStart(2, "0");
+}
 
 function tick() {
+  const now = new Date();
+
   if (FORCE_PHASE !== null) {
     setPhase(FORCE_PHASE);
+    if (FORCE_PHASE === 0) {
+      // Zielzeit schon vorbei? Dann bis zum nächsten Tag um 16 Uhr zählen
+      let target = getTargetTime();
+      if (target <= now) target = new Date(target.getTime() + 24 * 60 * 60 * 1000);
+      updateCountdownDigits(now, target);
+    }
     return;
   }
 
-  const now = new Date();
-
   if (now < getTargetTime()) {
     setPhase(0);
-    const totalSeconds = Math.floor((getTargetTime() - now) / 1000);
-    const h = Math.floor(totalSeconds / 3600);
-    const m = Math.floor((totalSeconds % 3600) / 60);
-    const s = totalSeconds % 60;
-    els.hours.textContent = String(h).padStart(2, "0");
-    els.minutes.textContent = String(m).padStart(2, "0");
-    els.seconds.textContent = String(s).padStart(2, "0");
+    updateCountdownDigits(now, getTargetTime());
   } else if (now < getWandelTime()) {
     setPhase(1);
   } else {
