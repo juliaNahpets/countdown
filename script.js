@@ -20,7 +20,8 @@ const PHRASE_INTERVAL = 5000;
 // darunter erscheint die drehende Sanduhr — bis zur zweiten Zielzeit
 const WANDEL_HOUR = 17;
 const WANDEL_MINUTE = 0;
-const TEXT_WANDEL_NAHT = "Die Zeit des Wandels naht...";
+// \n erzwingt den Umbruch an genau dieser Stelle
+const TEXT_WANDEL_NAHT = "Die Zeit des\nWandels naht...";
 const TEXT_WANDEL_DA = "Der Wandel ist da";
 
 // ====================================================================

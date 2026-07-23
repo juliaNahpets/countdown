@@ -181,13 +181,15 @@ html {
   top: 42%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(34vmin, 230px);
+  width: min(56vmin, 300px);
   color: #9cd2eb;
   font-size: clamp(1.1rem, 3.4vmin, 1.6rem);
   font-weight: 700;
   letter-spacing: 0.06em;
   line-height: 1.5;
   text-align: center;
+  /* \n im Text wird als Umbruch dargestellt */
+  white-space: pre-line;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9), 0 0 30px rgba(77, 163, 255, 0.4);
   animation: wandel-fade-in 2s ease;
 }
@@ -197,28 +199,39 @@ html {
   to { opacity: 1; }
 }
 
-/* ---------- animierte Punkte: . .. ... .. . ---------- */
+/* ---------- animierte Punkte: . .. ... (alle weg) von vorn ---------- */
+
+.dots span:nth-child(1) {
+  opacity: 0;
+  animation: dot-fade-1 3.6s ease-in-out infinite;
+}
 
 .dots span:nth-child(2) {
   opacity: 0;
-  animation: dot-fade-2 2.4s ease-in-out infinite;
+  animation: dot-fade-2 3.6s ease-in-out infinite;
 }
 
 .dots span:nth-child(3) {
   opacity: 0;
-  animation: dot-fade-3 2.4s ease-in-out infinite;
+  animation: dot-fade-3 3.6s ease-in-out infinite;
+}
+
+@keyframes dot-fade-1 {
+  0% { opacity: 0; }
+  8%, 74% { opacity: 1; }
+  86%, 100% { opacity: 0; }
 }
 
 @keyframes dot-fade-2 {
-  0%, 10% { opacity: 0; }
-  25%, 72% { opacity: 1; }
-  88%, 100% { opacity: 0; }
+  0%, 24% { opacity: 0; }
+  32%, 74% { opacity: 1; }
+  86%, 100% { opacity: 0; }
 }
 
 @keyframes dot-fade-3 {
-  0%, 28% { opacity: 0; }
-  44%, 56% { opacity: 1; }
-  72%, 100% { opacity: 0; }
+  0%, 48% { opacity: 0; }
+  56%, 74% { opacity: 1; }
+  86%, 100% { opacity: 0; }
 }
 
 /* ---------- Portal-Sanduhr (von qoian.com übernommen, Nacht-Variante) ---------- */
