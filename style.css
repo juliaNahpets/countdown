@@ -178,7 +178,7 @@ html {
 
 #wandel-text {
   position: absolute;
-  top: 42%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: min(56vmin, 300px);
