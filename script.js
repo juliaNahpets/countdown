@@ -144,7 +144,15 @@ function startPhrases() {
 // 0 = Countdown läuft, 1 = Wandel naht (16–17 Uhr), 2 = Wandel ist da (ab 17 Uhr)
 let currentPhase = -1;
 
+// Vorschau: ?zeige=wandel zeigt die Ansicht ab 17 Uhr, unabhängig von der Uhrzeit
+const FORCE_PHASE = new URLSearchParams(location.search).get("zeige") === "wandel" ? 2 : null;
+
 function tick() {
+  if (FORCE_PHASE !== null) {
+    setPhase(FORCE_PHASE);
+    return;
+  }
+
   const now = new Date();
 
   if (now < getTargetTime()) {
