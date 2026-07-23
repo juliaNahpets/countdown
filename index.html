@@ -18,26 +18,30 @@
     <button id="start-button">▶ Los geht's</button>
   </div>
 
-  <!-- Hauptinhalt -->
+  <!-- Hauptinhalt: drehender Ring mit Countdown darin, wechselnde Sätze darunter -->
   <main id="content" class="hidden">
-    <p id="phrase"></p>
+    <div id="ring-wrap">
+      <div id="ring"></div>
 
-    <div id="countdown">
-      <div class="unit">
-        <span class="value" id="hours">00</span>
-        <span class="label">Stunden</span>
-      </div>
-      <span class="separator">:</span>
-      <div class="unit">
-        <span class="value" id="minutes">00</span>
-        <span class="label">Minuten</span>
-      </div>
-      <span class="separator">:</span>
-      <div class="unit">
-        <span class="value" id="seconds">00</span>
-        <span class="label">Sekunden</span>
+      <div id="countdown">
+        <div class="unit">
+          <span class="value" id="hours">00</span>
+          <span class="label">Std</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="unit">
+          <span class="value" id="minutes">00</span>
+          <span class="label">Min</span>
+        </div>
+        <span class="separator">:</span>
+        <div class="unit">
+          <span class="value" id="seconds">00</span>
+          <span class="label">Sek</span>
+        </div>
       </div>
     </div>
+
+    <p id="phrase"></p>
   </main>
 
   <!-- Finale um 16:00 Uhr -->
