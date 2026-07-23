@@ -166,37 +166,102 @@ html {
   opacity: 0;
 }
 
-/* ---------- Finale ---------- */
+/* ---------- Wandel-Phase (ab 16 Uhr, im Ring) ---------- */
 
-#finale {
-  position: fixed;
-  inset: 0;
+#wandel {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 1.8rem;
+}
+
+#wandel-text {
+  color: #9cd2eb;
+  font-size: clamp(1.3rem, 4.5vmin, 2.1rem);
+  font-weight: 300;
+  letter-spacing: 0.08em;
   text-align: center;
-  padding: 2rem;
-  z-index: 5;
+  max-width: 60vmin;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9), 0 0 30px rgba(77, 163, 255, 0.4);
+  animation: wandel-fade-in 2s ease;
 }
 
-#finale-message {
-  font-size: clamp(2.5rem, 8vw, 6rem);
-  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
-  animation: pulse 1.5s ease-in-out infinite;
+@keyframes wandel-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+/* ---------- Portal-Sanduhr (von qoian.com übernommen, Nacht-Variante) ---------- */
+
+.q-portal-sphere {
+  position: relative;
+  isolation: isolate;
+  width: 76px;
+  height: 76px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(190, 235, 255, 0.24);
+  background: linear-gradient(120deg, rgba(220, 245, 255, 0.12), rgba(120, 200, 255, 0.08), rgba(255, 255, 255, 0.04));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 0 22px rgba(120, 210, 255, 0.12), 0 0 70px rgba(60, 160, 220, 0.08), inset 0 0 18px rgba(220, 245, 255, 0.06);
+  overflow: visible;
 }
 
-#confetti {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+/* rotierender Prisma-Lichtring um die Kugel */
+.q-portal-sphere::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  padding: 2px;
   pointer-events: none;
-  z-index: 6;
+  z-index: 2;
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 42deg, rgba(220, 248, 255, 0) 58deg, rgba(180, 235, 255, 0.28) 70deg, rgba(130, 220, 255, 0.92) 76deg, rgba(255, 255, 255, 1) 79deg, rgba(190, 170, 255, 0.46) 82deg, rgba(180, 235, 255, 0.22) 90deg, transparent 106deg, transparent 218deg, rgba(255, 255, 255, 0) 230deg, rgba(235, 252, 255, 0.52) 240deg, rgba(120, 215, 255, 0.35) 246deg, transparent 258deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  filter: drop-shadow(0 0 6px rgba(220, 245, 255, 0.55)) drop-shadow(0 0 18px rgba(90, 190, 255, 0.32));
+  opacity: 0.92;
+  animation: q-portal-prism-rotate 11s linear infinite, q-portal-prism-edge-shimmer 4.7s ease-in-out infinite;
+}
+
+.q-portal-symbol {
+  width: 34px;
+  height: 34px;
+  position: relative;
+  z-index: 3;
+}
+
+.q-portal-symbol::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("assets/sanduhr.png") center / contain no-repeat;
+  filter: drop-shadow(0 0 8px rgba(180, 235, 255, 0.72)) drop-shadow(0 0 20px rgba(80, 180, 255, 0.38));
+  animation: q-portal-symbol-breathe 7.8s ease-in-out infinite;
+}
+
+@keyframes q-portal-prism-rotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes q-portal-prism-edge-shimmer {
+  0%, 100% { opacity: 0.38; filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.18)) drop-shadow(0 0 8px rgba(150, 220, 255, 0.1)); }
+  18% { opacity: 0.72; }
+  47% { opacity: 0.98; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.62)) drop-shadow(0 0 15px rgba(150, 220, 255, 0.28)); }
+  63% { opacity: 0.44; }
+}
+
+@keyframes q-portal-symbol-breathe {
+  0%, 100% { opacity: 0.78; transform: scale(1); filter: drop-shadow(0 0 6px rgba(180, 235, 255, 0.38)) drop-shadow(0 0 16px rgba(80, 180, 255, 0.18)); }
+  17% { opacity: 0.92; transform: scale(1.125); }
+  43% { opacity: 0.72; transform: scale(0.995); }
+  61% { opacity: 1; transform: scale(1.145); filter: drop-shadow(0 0 9px rgba(220, 248, 255, 0.62)) drop-shadow(0 0 22px rgba(80, 180, 255, 0.3)); }
+  78% { opacity: 0.84; transform: scale(0.925); }
 }
 
 /* ---------- Sound-Button (Farben passend zum Ring) ---------- */

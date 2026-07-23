@@ -16,8 +16,12 @@ const PHRASES = [
 // Wie lange jeder Satz angezeigt wird (in Millisekunden)
 const PHRASE_INTERVAL = 5000;
 
-// Was um 16:00 Uhr passiert
-const FINALE_MESSAGE = "🎉 Es ist 16 Uhr! 🎉";
+// Wandel-Phase: ab 16 Uhr ersetzt dieser Text den Countdown,
+// darunter erscheint die drehende Sanduhr — bis zur zweiten Zielzeit
+const WANDEL_HOUR = 17;
+const WANDEL_MINUTE = 0;
+const TEXT_WANDEL_NAHT = "Die Zeit des Wandels naht...";
+const TEXT_WANDEL_DA = "Der Wandel ist da";
 
 // ====================================================================
 
@@ -27,9 +31,9 @@ const els = {
   hours: document.getElementById("hours"),
   minutes: document.getElementById("minutes"),
   seconds: document.getElementById("seconds"),
-  finale: document.getElementById("finale"),
-  finaleMessage: document.getElementById("finale-message"),
-  confetti: document.getElementById("confetti"),
+  countdown: document.getElementById("countdown"),
+  wandel: document.getElementById("wandel"),
+  wandelText: document.getElementById("wandel-text"),
   music: document.getElementById("music"),
   soundButton: document.getElementById("sound-button"),
   bgVideo: document.getElementById("bg-video"),
@@ -39,6 +43,12 @@ const els = {
 function getTargetTime() {
   const target = new Date();
   target.setHours(TARGET_HOUR, TARGET_MINUTE, 0, 0);
+  return target;
+}
+
+function getWandelTime() {
+  const target = new Date();
+  target.setHours(WANDEL_HOUR, WANDEL_MINUTE, 0, 0);
   return target;
 }
 
@@ -59,20 +69,6 @@ function getTargetTime() {
   });
   video.load();
 })();
-
-// ---------- Start: Countdown läuft sofort los ----------
-
-startPhrases();
-tick();
-setInterval(tick, 1000);
-
-// Musik direkt versuchen — Browser blockieren Autoplay meist,
-// dann bleibt der Sound-Button auf "aus" und ein Klick startet sie.
-els.music.volume = 0.5;
-els.music
-  .play()
-  .then(() => setSoundIcon(true))
-  .catch(() => setSoundIcon(false));
 
 // ---------- Sound an/aus ----------
 
@@ -111,82 +107,63 @@ function startPhrases() {
   }, PHRASE_INTERVAL);
 }
 
-// ---------- Countdown ----------
+// ---------- Countdown & Phasen ----------
 
-let finaleStarted = false;
+// 0 = Countdown läuft, 1 = Wandel naht (16–17 Uhr), 2 = Wandel ist da (ab 17 Uhr)
+let currentPhase = -1;
 
 function tick() {
-  const diff = getTargetTime() - new Date();
+  const now = new Date();
 
-  if (diff <= 0) {
-    if (!finaleStarted) startFinale();
+  if (now < getTargetTime()) {
+    setPhase(0);
+    const totalSeconds = Math.floor((getTargetTime() - now) / 1000);
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    els.hours.textContent = String(h).padStart(2, "0");
+    els.minutes.textContent = String(m).padStart(2, "0");
+    els.seconds.textContent = String(s).padStart(2, "0");
+  } else if (now < getWandelTime()) {
+    setPhase(1);
+  } else {
+    setPhase(2);
+  }
+}
+
+function setPhase(phase) {
+  if (phase === currentPhase) return;
+  currentPhase = phase;
+
+  if (phase === 0) {
+    els.countdown.classList.remove("hidden");
+    els.wandel.classList.add("hidden");
+    els.phrase.classList.remove("hidden");
     return;
   }
 
-  const totalSeconds = Math.floor(diff / 1000);
-  const h = Math.floor(totalSeconds / 3600);
-  const m = Math.floor((totalSeconds % 3600) / 60);
-  const s = totalSeconds % 60;
+  // ab 16 Uhr: Countdown und Sätze weichen dem Wandel-Text mit Sanduhr
+  els.countdown.classList.add("hidden");
+  els.phrase.classList.add("hidden");
+  els.wandel.classList.remove("hidden");
+  els.wandelText.textContent = phase === 1 ? TEXT_WANDEL_NAHT : TEXT_WANDEL_DA;
 
-  els.hours.textContent = String(h).padStart(2, "0");
-  els.minutes.textContent = String(m).padStart(2, "0");
-  els.seconds.textContent = String(s).padStart(2, "0");
+  // die Sanduhr läuft nur bis 17 Uhr — danach ist der Wandel da
+  const sphere = document.querySelector(".q-portal-sphere");
+  sphere.classList.toggle("hidden", phase === 2);
 }
 
-// ---------- Finale um 16:00 Uhr ----------
+// ---------- Start: Countdown läuft sofort los ----------
+// (ganz am Ende, damit alle Variablen initialisiert sind)
 
-function startFinale() {
-  finaleStarted = true;
-  els.content.classList.add("hidden");
-  els.finaleMessage.textContent = FINALE_MESSAGE;
-  els.finale.classList.remove("hidden");
-  startConfetti();
-}
+startPhrases();
+tick();
+setInterval(tick, 1000);
 
-// ---------- Konfetti ----------
-
-function startConfetti() {
-  const canvas = els.confetti;
-  const ctx = canvas.getContext("2d");
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  });
-
-  const colors = ["#9fd8ff", "#4da3ff", "#ffd700", "#00e5ff", "#ffffff", "#1d5fa8"];
-  const particles = Array.from({ length: 180 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height - canvas.height,
-    size: Math.random() * 8 + 4,
-    color: colors[Math.floor(Math.random() * colors.length)],
-    speedY: Math.random() * 3 + 2,
-    speedX: Math.random() * 2 - 1,
-    rotation: Math.random() * 360,
-    rotationSpeed: Math.random() * 10 - 5,
-  }));
-
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (const p of particles) {
-      p.y += p.speedY;
-      p.x += p.speedX;
-      p.rotation += p.rotationSpeed;
-      if (p.y > canvas.height + 20) {
-        p.y = -20;
-        p.x = Math.random() * canvas.width;
-      }
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate((p.rotation * Math.PI) / 180);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
-      ctx.restore();
-    }
-    requestAnimationFrame(draw);
-  }
-
-  draw();
-}
+// Musik direkt versuchen — Browser blockieren Autoplay meist,
+// dann bleibt der Sound-Button auf "aus" und ein Klick startet sie.
+els.music.volume = 0.5;
+els.music
+  .play()
+  .then(() => setSoundIcon(true))
+  .catch(() => setSoundIcon(false));

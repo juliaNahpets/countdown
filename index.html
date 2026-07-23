@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Countdown bis 16:00 Uhr</title>
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body>
 
@@ -34,16 +34,16 @@
           <span class="label">Sek</span>
         </div>
       </div>
+
+      <!-- Wandel-Phase: ersetzt ab 16 Uhr den Countdown -->
+      <div id="wandel" class="hidden">
+        <p id="wandel-text"></p>
+        <div class="q-portal-trigger q-portal-sphere" role="button" tabindex="0"><span class="q-portal-symbol"></span></div>
+      </div>
     </div>
 
     <p id="phrase"></p>
   </main>
-
-  <!-- Finale um 16:00 Uhr -->
-  <div id="finale" class="hidden">
-    <h1 id="finale-message"></h1>
-  </div>
-  <canvas id="confetti"></canvas>
 
   <!-- Hintergrundmusik: einfach assets/music.mp3 ablegen -->
   <audio id="music" loop>
@@ -52,6 +52,6 @@
 
   <button id="sound-button" title="Musik an/aus">🔇</button>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
