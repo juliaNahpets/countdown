@@ -6,7 +6,7 @@ const TARGET_MINUTE = 0;
 
 // Sätze, die über dem Countdown rotieren
 const PHRASES = [
-  "Hörst ihr Wispern...",
+  "Hörst du ihr Wispern...",
   "Bald ist es soweit...",
   "Der Zeitpunkt naht...",
   "Der Wandel kommt...",
