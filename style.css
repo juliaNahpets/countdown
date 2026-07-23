@@ -199,7 +199,7 @@ html {
   to { opacity: 1; }
 }
 
-/* ---------- animierte Punkte: . .. ... (alle weg) von vorn ---------- */
+/* ---------- animierte Punkte: . .. ... .. . (Pause) von vorn ---------- */
 
 .dots span:nth-child(1) {
   opacity: 0;
@@ -218,20 +218,20 @@ html {
 
 @keyframes dot-fade-1 {
   0% { opacity: 0; }
-  8%, 74% { opacity: 1; }
-  86%, 100% { opacity: 0; }
+  6%, 76% { opacity: 1; }
+  84%, 100% { opacity: 0; }
 }
 
 @keyframes dot-fade-2 {
-  0%, 24% { opacity: 0; }
-  32%, 74% { opacity: 1; }
-  86%, 100% { opacity: 0; }
+  0%, 12% { opacity: 0; }
+  18%, 58% { opacity: 1; }
+  66%, 100% { opacity: 0; }
 }
 
 @keyframes dot-fade-3 {
-  0%, 48% { opacity: 0; }
-  56%, 74% { opacity: 1; }
-  86%, 100% { opacity: 0; }
+  0%, 28% { opacity: 0; }
+  34%, 42% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 /* ---------- Portal-Sanduhr (von qoian.com übernommen, Nacht-Variante) ---------- */
