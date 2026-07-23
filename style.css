@@ -201,37 +201,39 @@ html {
 
 /* ---------- animierte Punkte: . .. ... .. . (Pause) von vorn ---------- */
 
+/* jeder Punkt erscheint kurz und knackig, dazwischen deutliche Haltepausen */
+
 .dots span:nth-child(1) {
   opacity: 0;
-  animation: dot-fade-1 6s ease-in-out infinite;
+  animation: dot-fade-1 4.8s ease-in-out infinite;
 }
 
 .dots span:nth-child(2) {
   opacity: 0;
-  animation: dot-fade-2 6s ease-in-out infinite;
+  animation: dot-fade-2 4.8s ease-in-out infinite;
 }
 
 .dots span:nth-child(3) {
   opacity: 0;
-  animation: dot-fade-3 6s ease-in-out infinite;
+  animation: dot-fade-3 4.8s ease-in-out infinite;
 }
 
 @keyframes dot-fade-1 {
   0% { opacity: 0; }
-  6%, 76% { opacity: 1; }
-  84%, 100% { opacity: 0; }
+  3%, 80% { opacity: 1; }
+  83%, 100% { opacity: 0; }
 }
 
 @keyframes dot-fade-2 {
-  0%, 12% { opacity: 0; }
-  18%, 58% { opacity: 1; }
-  66%, 100% { opacity: 0; }
+  0%, 16% { opacity: 0; }
+  19%, 64% { opacity: 1; }
+  67%, 100% { opacity: 0; }
 }
 
 @keyframes dot-fade-3 {
-  0%, 28% { opacity: 0; }
-  34%, 42% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%, 32% { opacity: 0; }
+  35%, 48% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 /* ---------- Portal-Sanduhr (von qoian.com übernommen, Nacht-Variante) ---------- */
