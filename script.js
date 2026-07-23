@@ -22,8 +22,6 @@ const FINALE_MESSAGE = "🎉 Es ist 16 Uhr! 🎉";
 // ====================================================================
 
 const els = {
-  startScreen: document.getElementById("start-screen"),
-  startButton: document.getElementById("start-button"),
   content: document.getElementById("content"),
   phrase: document.getElementById("phrase"),
   hours: document.getElementById("hours"),
@@ -33,7 +31,7 @@ const els = {
   finaleMessage: document.getElementById("finale-message"),
   confetti: document.getElementById("confetti"),
   music: document.getElementById("music"),
-  muteButton: document.getElementById("mute-button"),
+  soundButton: document.getElementById("sound-button"),
   bgVideo: document.getElementById("bg-video"),
   background: document.getElementById("background"),
 };
@@ -62,28 +60,39 @@ function getTargetTime() {
   video.load();
 })();
 
-// ---------- Start ----------
+// ---------- Start: Countdown läuft sofort los ----------
 
-els.startButton.addEventListener("click", () => {
-  els.startScreen.classList.add("hidden");
-  els.content.classList.remove("hidden");
-  els.muteButton.classList.remove("hidden");
+startPhrases();
+tick();
+setInterval(tick, 1000);
 
-  els.music.volume = 0.5;
-  els.music.play().catch(() => {
-    // keine Musikdatei vorhanden oder Wiedergabe blockiert — Countdown läuft trotzdem
-  });
+// Musik direkt versuchen — Browser blockieren Autoplay meist,
+// dann bleibt der Sound-Button auf "aus" und ein Klick startet sie.
+els.music.volume = 0.5;
+els.music
+  .play()
+  .then(() => setSoundIcon(true))
+  .catch(() => setSoundIcon(false));
 
-  startPhrases();
-  tick();
-  setInterval(tick, 1000);
-});
+// ---------- Sound an/aus ----------
 
-// ---------- Mute ----------
+function setSoundIcon(on) {
+  els.soundButton.textContent = on ? "🔊" : "🔇";
+}
 
-els.muteButton.addEventListener("click", () => {
-  els.music.muted = !els.music.muted;
-  els.muteButton.textContent = els.music.muted ? "🔇" : "🔊";
+els.soundButton.addEventListener("click", () => {
+  if (els.music.paused) {
+    els.music
+      .play()
+      .then(() => setSoundIcon(true))
+      .catch(() => {
+        // keine Musikdatei vorhanden — Button bleibt stumm
+        setSoundIcon(false);
+      });
+  } else {
+    els.music.pause();
+    setSoundIcon(false);
+  }
 });
 
 // ---------- Rotierende Sätze ----------

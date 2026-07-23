@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Countdown bis 16:00 Uhr</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
 
@@ -13,13 +13,8 @@
   <video id="bg-video" autoplay muted loop playsinline></video>
   <div id="overlay"></div>
 
-  <!-- Start-Overlay (nötig, damit der Browser Musik abspielen darf) -->
-  <div id="start-screen">
-    <button id="start-button">▶ Los geht's</button>
-  </div>
-
   <!-- Hauptinhalt: drehender Ring mit Countdown darin, wechselnde Sätze darunter -->
-  <main id="content" class="hidden">
+  <main id="content">
     <div id="ring-wrap">
       <div id="ring"></div>
 
@@ -55,8 +50,8 @@
     <source src="assets/music.mp3" type="audio/mpeg" />
   </audio>
 
-  <button id="mute-button" class="hidden" title="Musik an/aus">🔊</button>
+  <button id="sound-button" title="Musik an/aus">🔇</button>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=4"></script>
 </body>
 </html>

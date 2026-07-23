@@ -10,6 +10,11 @@ body {
   overflow: hidden;
   font-family: "Segoe UI", system-ui, sans-serif;
   color: #fff;
+}
+
+/* Grundfarbe nur auf html — ein body-Hintergrund würde die
+   fixed-Ebenen mit negativem z-index (Bild, Video, Overlay) verdecken */
+html {
   background: #0d0d1a;
 }
 
@@ -26,6 +31,8 @@ body {
   background: url("assets/background.jpg") center / cover no-repeat,
     linear-gradient(-45deg, #06080f, #0d1b3d, #123a6b, #1d5fa8);
   background-size: cover, 400% 400%;
+  /* die Bilddatei ist dunkel exportiert — leicht aufhellen */
+  filter: brightness(1.25) saturate(1.05);
   animation: gradient-drift 15s ease infinite, ken-burns 40s ease-in-out infinite alternate;
   z-index: -3;
 }
@@ -45,7 +52,8 @@ body {
 #overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.25);
+  /* leichte Vignette: Mitte etwas abdunkeln, damit Ring und Text lesbar bleiben */
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.3) 100%);
   z-index: -1;
 }
 
@@ -58,34 +66,6 @@ body {
 @keyframes ken-burns {
   from { transform: scale(1) translate(0, 0); }
   to { transform: scale(1.1) translate(-1.5%, 1%); }
-}
-
-/* ---------- Start-Overlay ---------- */
-
-#start-screen {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 10;
-}
-
-#start-button {
-  font-size: 1.8rem;
-  padding: 1rem 3rem;
-  border: 2px solid #fff;
-  border-radius: 999px;
-  background: transparent;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.3s;
-}
-
-#start-button:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
 }
 
 /* ---------- Inhalt ---------- */
@@ -219,9 +199,9 @@ body {
   z-index: 6;
 }
 
-/* ---------- Mute-Button ---------- */
+/* ---------- Sound-Button (Farben passend zum Ring) ---------- */
 
-#mute-button {
+#sound-button {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
@@ -229,9 +209,16 @@ body {
   width: 3.2rem;
   height: 3.2rem;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
+  border: 1px solid rgba(159, 216, 255, 0.7);
+  background: rgba(9, 20, 40, 0.55);
+  color: #9fd8ff;
   cursor: pointer;
+  box-shadow: 0 0 14px rgba(77, 163, 255, 0.35), inset 0 0 8px rgba(77, 163, 255, 0.15);
+  transition: box-shadow 0.3s, transform 0.3s;
   z-index: 7;
+}
+
+#sound-button:hover {
+  box-shadow: 0 0 22px rgba(77, 163, 255, 0.6), inset 0 0 10px rgba(77, 163, 255, 0.25);
+  transform: scale(1.08);
 }
