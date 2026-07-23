@@ -171,18 +171,20 @@ html {
 /* ---------- Wandel-Phase (ab 16 Uhr, im Ring) ---------- */
 
 #wandel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  /* muss in den inneren Kreis des Rings passen */
-  max-width: min(40vmin, 280px);
+  /* füllt den Ring-Container: Text mittig, Sanduhr im unteren Drittel */
+  position: absolute;
+  inset: 0;
 }
 
 #wandel-text {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(34vmin, 230px);
   color: #9cd2eb;
-  font-size: clamp(1.2rem, 3.8vmin, 1.8rem);
-  font-weight: 300;
+  font-size: clamp(1.1rem, 3.4vmin, 1.6rem);
+  font-weight: 700;
   letter-spacing: 0.06em;
   line-height: 1.5;
   text-align: center;
@@ -198,7 +200,11 @@ html {
 /* ---------- Portal-Sanduhr (von qoian.com übernommen, Nacht-Variante) ---------- */
 
 .q-portal-sphere {
-  position: relative;
+  /* unteres Drittel des Rings */
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   isolation: isolate;
   width: 104px;
   height: 104px;
