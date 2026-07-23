@@ -20,6 +20,7 @@ const PHRASE_INTERVAL = 5000;
 const PHRASES_DANACH = [
   "Die Zeit mag vergehen...",
   "...doch wir werden fortbestehen...",
+  "Weseler Kampfgabeln!",
 ];
 
 // Wandel-Phase: ab 16 Uhr ersetzt dieser Text den Countdown,
