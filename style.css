@@ -1,0 +1,202 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #fff;
+  background: #0d0d1a;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---------- Hintergrund ---------- */
+
+/* Bild/GIF-Hintergrund (assets/background.gif) — sanfte Bewegung per Zoom */
+#background {
+  position: fixed;
+  inset: -5%;
+  background: url("assets/background.gif") center / cover no-repeat,
+    linear-gradient(-45deg, #1a1a40, #270082, #7a0bc0, #fa58b6);
+  background-size: cover, 400% 400%;
+  animation: gradient-drift 15s ease infinite, slow-zoom 30s ease-in-out infinite alternate;
+  z-index: -3;
+}
+
+/* Video-Hintergrund (assets/background.mp4) — wird per JS aktiviert, falls vorhanden */
+#bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  display: none;
+}
+
+/* dunkler Schleier, damit der Text lesbar bleibt */
+#overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: -1;
+}
+
+@keyframes gradient-drift {
+  0% { background-position: center, 0% 50%; }
+  50% { background-position: center, 100% 50%; }
+  100% { background-position: center, 0% 50%; }
+}
+
+@keyframes slow-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+/* ---------- Start-Overlay ---------- */
+
+#start-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+#start-button {
+  font-size: 1.8rem;
+  padding: 1rem 3rem;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+#start-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* ---------- Inhalt ---------- */
+
+#content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+#phrase {
+  font-size: clamp(1.3rem, 3.5vw, 2.4rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  min-height: 3rem;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.7);
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
+#phrase.fade-out {
+  opacity: 0;
+}
+
+#countdown {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.value {
+  font-size: clamp(3.5rem, 12vw, 8rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+}
+
+.label {
+  margin-top: 0.5rem;
+  font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  opacity: 0.8;
+}
+
+.separator {
+  font-size: clamp(3.5rem, 12vw, 8rem);
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+/* ---------- Finale ---------- */
+
+#finale {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  z-index: 5;
+}
+
+#finale-message {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+#confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* ---------- Mute-Button ---------- */
+
+#mute-button {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  cursor: pointer;
+  z-index: 7;
+}

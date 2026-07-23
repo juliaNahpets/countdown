@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown bis 16:00 Uhr</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Beweglicher Hintergrund: GIF/Bild als Fallback, Video falls vorhanden -->
+  <div id="background"></div>
+  <video id="bg-video" autoplay muted loop playsinline></video>
+  <div id="overlay"></div>
+
+  <!-- Start-Overlay (nötig, damit der Browser Musik abspielen darf) -->
+  <div id="start-screen">
+    <button id="start-button">▶ Los geht's</button>
+  </div>
+
+  <!-- Hauptinhalt -->
+  <main id="content" class="hidden">
+    <p id="phrase"></p>
+
+    <div id="countdown">
+      <div class="unit">
+        <span class="value" id="hours">00</span>
+        <span class="label">Stunden</span>
+      </div>
+      <span class="separator">:</span>
+      <div class="unit">
+        <span class="value" id="minutes">00</span>
+        <span class="label">Minuten</span>
+      </div>
+      <span class="separator">:</span>
+      <div class="unit">
+        <span class="value" id="seconds">00</span>
+        <span class="label">Sekunden</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Finale um 16:00 Uhr -->
+  <div id="finale" class="hidden">
+    <h1 id="finale-message"></h1>
+  </div>
+  <canvas id="confetti"></canvas>
+
+  <!-- Hintergrundmusik: einfach assets/music.mp3 ablegen -->
+  <audio id="music" loop>
+    <source src="assets/music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button id="mute-button" class="hidden" title="Musik an/aus">🔊</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
