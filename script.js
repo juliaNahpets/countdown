@@ -16,6 +16,12 @@ const PHRASES = [
 // Wie lange jeder Satz angezeigt wird (in Millisekunden)
 const PHRASE_INTERVAL = 5000;
 
+// Sätze unter dem Ring ab 17 Uhr
+const PHRASES_DANACH = [
+  "Die Zeit mag vergehen...",
+  "..doch wir werden fortbestehen...",
+];
+
 // Wandel-Phase: ab 16 Uhr ersetzt dieser Text den Countdown,
 // darunter erscheint die drehende Sanduhr — bis zur zweiten Zielzeit
 const WANDEL_HOUR = 17;
@@ -125,15 +131,26 @@ function setTextWithDots(el, text) {
 
 // ---------- Rotierende Sätze ----------
 
+let phraseIndex = 0;
+let activePhrases = PHRASES;
+
+// wechselt die Satzliste (z. B. ab 17 Uhr) und zeigt sofort den ersten Satz
+function switchPhraseList(list) {
+  if (activePhrases === list) return;
+  activePhrases = list;
+  phraseIndex = 0;
+  setTextWithDots(els.phrase, list[0]);
+}
+
 function startPhrases() {
-  let index = 0;
-  setTextWithDots(els.phrase, PHRASES[index]);
+  setTextWithDots(els.phrase, activePhrases[phraseIndex]);
 
   setInterval(() => {
+    if (els.phrase.classList.contains("hidden")) return;
     els.phrase.classList.add("fade-out");
     setTimeout(() => {
-      index = (index + 1) % PHRASES.length;
-      setTextWithDots(els.phrase, PHRASES[index]);
+      phraseIndex = (phraseIndex + 1) % activePhrases.length;
+      setTextWithDots(els.phrase, activePhrases[phraseIndex]);
       els.phrase.classList.remove("fade-out");
     }, 800); // muss zur CSS-Transition passen
   }, PHRASE_INTERVAL);
@@ -179,15 +196,24 @@ function setPhase(phase) {
     els.countdown.classList.remove("hidden");
     els.wandel.classList.add("hidden");
     els.phrase.classList.remove("hidden");
+    switchPhraseList(PHRASES);
     return;
   }
 
-  // ab 16 Uhr: Countdown und Sätze weichen dem Wandel-Text mit Sanduhr
+  // ab 16 Uhr: Countdown weicht dem Wandel-Text mit Sanduhr
   els.countdown.classList.add("hidden");
-  els.phrase.classList.add("hidden");
   els.wandel.classList.remove("hidden");
   // die Sanduhr bleibt in beiden Phasen stehen, nur der Text wechselt
   setTextWithDots(els.wandelText, phase === 1 ? TEXT_WANDEL_NAHT : TEXT_WANDEL_DA);
+
+  if (phase === 1) {
+    // 16–17 Uhr: keine Sätze unter dem Ring
+    els.phrase.classList.add("hidden");
+  } else {
+    // ab 17 Uhr: die Danach-Sätze rotieren unter dem Ring
+    els.phrase.classList.remove("hidden");
+    switchPhraseList(PHRASES_DANACH);
+  }
 }
 
 // ---------- Start: Countdown läuft sofort los ----------
