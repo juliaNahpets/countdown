@@ -178,11 +178,8 @@ function setPhase(phase) {
   els.countdown.classList.add("hidden");
   els.phrase.classList.add("hidden");
   els.wandel.classList.remove("hidden");
+  // die Sanduhr bleibt in beiden Phasen stehen, nur der Text wechselt
   setTextWithDots(els.wandelText, phase === 1 ? TEXT_WANDEL_NAHT : TEXT_WANDEL_DA);
-
-  // die Sanduhr läuft nur bis 17 Uhr — danach ist der Wandel da
-  const sphere = document.querySelector(".q-portal-sphere");
-  sphere.classList.toggle("hidden", phase === 2);
 }
 
 // ---------- Start: Countdown läuft sofort los ----------
