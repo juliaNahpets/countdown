@@ -19,14 +19,14 @@ body {
 
 /* ---------- Hintergrund ---------- */
 
-/* Bild/GIF-Hintergrund (assets/background.gif) — sanfte Bewegung per Zoom */
+/* Bild-Hintergrund — sanfte Bewegung per Ken-Burns-Effekt (Zoom + Schwenk) */
 #background {
   position: fixed;
-  inset: -5%;
-  background: url("assets/background.gif") center / cover no-repeat,
-    linear-gradient(-45deg, #1a1a40, #270082, #7a0bc0, #fa58b6);
+  inset: -6%;
+  background: url("assets/background.jpg") center / cover no-repeat,
+    linear-gradient(-45deg, #06080f, #0d1b3d, #123a6b, #1d5fa8);
   background-size: cover, 400% 400%;
-  animation: gradient-drift 15s ease infinite, slow-zoom 30s ease-in-out infinite alternate;
+  animation: gradient-drift 15s ease infinite, ken-burns 40s ease-in-out infinite alternate;
   z-index: -3;
 }
 
@@ -45,7 +45,7 @@ body {
 #overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.25);
   z-index: -1;
 }
 
@@ -55,9 +55,9 @@ body {
   100% { background-position: center, 0% 50%; }
 }
 
-@keyframes slow-zoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
+@keyframes ken-burns {
+  from { transform: scale(1) translate(0, 0); }
+  to { transform: scale(1.1) translate(-1.5%, 1%); }
 }
 
 /* ---------- Start-Overlay ---------- */
